@@ -8,48 +8,60 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/trajets")
 public class TrajetController {
+
     @Autowired
-    TrajetService trajetService;
-    @RequestMapping("/accueil")
-    public String accueil(Model model) {
+    private TrajetService trajetService;
+
+    @GetMapping("/accueil")
+    public String accueil() {
         return "accueil";
     }
 
-    @RequestMapping("/all")
+    @GetMapping("/all")
     public String afficherPageTrajets(Model model) {
         List<Trajet> trajets = trajetService.getAll();
         model.addAttribute("trajets", trajets);
         return "liste_trajets";
     }
+
     @GetMapping("/add")
-    public String ajouterTrajet(Model model) {
-        Trajet trajet = new Trajet();
-        model.addAttribute("TrajetForm", trajet);
+    public String ajouterTrajetForm(Model model) {
+        model.addAttribute("TrajetForm", new Trajet());
         return "add_trajet";
     }
+
     @PostMapping("/saveTrajet")
     public String saveTrajet(@ModelAttribute("TrajetForm") Trajet trajet) {
         trajetService.createTrajet(trajet);
         return "redirect:/trajets/all";
     }
 
-    @GetMapping("edit/{id}")
-    public String UpdateForm(@PathVariable("id")long id, Model model){
-        Trajet trajet = trajetService.getTrajetById(id).get();
-        model.addAttribute("TrajetForm", trajet);
+    @GetMapping("/edit/{id}")
+    public String updateForm(@PathVariable("id") Long id, Model model) {
+        Optional<Trajet> trajetOptional = trajetService.getTrajetById(id);
+        if (trajetOptional.isPresent()) {
+            model.addAttribute("TrajetForm", trajetOptional.get());
+            return "edit_trajet"; // Redirige vers un formulaire spécifique pour l'édition.
+        } else {
+            return "redirect:/trajets/all?error=notfound";
+        }
+    }
+
+    @PostMapping("/updateTrajet/{id}")
+    public String updateTrajet(@PathVariable("id") Long id, @ModelAttribute("TrajetForm") Trajet trajet) {
+        trajet.setId(id);
+        trajetService.createTrajet(trajet); // Ou utilisez un service dédié à la mise à jour.
         return "redirect:/trajets/all";
     }
 
     @GetMapping("/delete/{id}")
-    public String supprimerTrajet(@PathVariable long id) {
+    public String supprimerTrajet(@PathVariable Long id) {
         trajetService.deleteById(id);
         return "redirect:/trajets/all";
     }
-
 }
-

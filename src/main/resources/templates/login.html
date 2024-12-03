@@ -101,24 +101,18 @@
 <div class="login-container">
     <div class="login-box">
         <div class="login-title">What's your email and password?</div>
-        <form>
+        <form th:action="@{/auth/login}" th:object="${user}" method="post">
             <div class="mb-3">
-                <input type="email" class="form-control" placeholder="Email" required>
+                <input type="email" th:field="*{email}" class="form-control" placeholder="Email" required>
             </div>
             <div class="mb-3">
-                <input type="password" class="form-control" placeholder="Password" required>
-            </div>
-            <div class="mb-3 custom-checkbox">
-                <input type="checkbox" id="rememberMe">
-                <label for="rememberMe">Remember me</label>
-            </div>
-            <div class="mb-3">
-                <a href="#" class="forgot-password">Forgot password?</a>
+                <input type="password" th:field="*{password}" class="form-control" placeholder="Password" required>
             </div>
             <div class="d-grid">
                 <button type="submit" class="btn btn-primary">Login</button>
             </div>
         </form>
+
     </div>
 </div>
 </body>

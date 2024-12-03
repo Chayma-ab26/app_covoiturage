@@ -7,35 +7,127 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e0e0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand img {
+            height: 60px;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #343a40;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            background-color: #ffffff;
+            margin-top: 30px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-icon {
+            font-size: 40px;
+            color: #9984D0;
         }
 
         .form-container {
-            margin-top: 50px;
+            background-color: #ffffff;
             padding: 30px;
-            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .form-control {
             border-radius: 8px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+            box-shadow: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #9984D0;
         }
 
         .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
+            background-color: #9984D0;
+            border: none;
+            border-radius: 20px;
+            padding: 12px;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
         }
 
         .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #004085;
+            background-color: #765e9e;
         }
+
+        footer {
+            text-align: center;
+            padding: 15px 0;
+            background-color: #ffffff;
+            border-top: 1px solid #e0e0e0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer a {
+            text-decoration: none;
+            color: #9984D0;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+
     </style>
 </head>
 <body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="/images/logo_0.png" alt="Logo">
+        </a>
+        <div class="d-flex">
+            <a href="#" class="nav-link text-dark">Déconnexion</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-8">
             <div class="form-container">
-                <h2 class="text-center">Publier un Trajet</h2>
-                <form th:action="@{/trajets/add}" th:object="${TrajetForm}" method="post">
+                <h2 class="text-center mb-4">Publier un Trajet</h2>
+                <form th:action="@{/trajets/saveTrajet}" th:object="${TrajetForm}" method="post">
                     <div class="mb-3">
                         <label for="depart" class="form-label">Ville de Départ</label>
                         <input type="text" class="form-control" id="depart" th:field="*{depart}" placeholder="Entrez la ville de départ" required>
@@ -47,13 +139,13 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="date" class="form-label">Date du Trajet</label>
-                        <input type="date" class="form-control" id="date" th:field="*{datePublication}" required>
+                        <label for="dateDepart" class="form-label">Date de Départ</label>
+                        <input type="date" class="form-control" id="dateDepart" th:field="*{dateDepart}" required>
                     </div>
 
                     <div class="mb-3">
-                        <label for="places" class="form-label">Nombre de Places Disponibles</label>
-                        <input type="number" class="form-control" id="places" th:field="*{nbPlaces}" placeholder="Ex: 4" min="1" required>
+                        <label for="nbPlaces" class="form-label">Nombre de Places</label>
+                        <input type="number" class="form-control" id="nbPlaces" th:field="*{nbPlaces}" min="1" required>
                     </div>
 
                     <button type="submit" class="btn btn-primary w-100">Publier</button>
@@ -62,6 +154,13 @@
         </div>
     </div>
 </div>
+
+<!-- Footer -->
+<footer>
+    <p>© 2024 Votre Application - Tous droits réservés. <a href="#">Conditions d'utilisation</a></p>
+</footer>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
