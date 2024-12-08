@@ -33,4 +33,8 @@ public class TrajetService {
         trajetRepository.deleteById(id);
     }
 
+    public void updateTrajet(Trajet trajet) {
+        trajetRepository.saveAndFlush(trajet); // Save met à jour l'entité si elle existe déjà.
+
+    }
 }

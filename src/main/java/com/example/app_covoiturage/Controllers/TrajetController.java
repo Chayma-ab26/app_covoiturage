@@ -46,17 +46,18 @@ public class TrajetController {
         Optional<Trajet> trajetOptional = trajetService.getTrajetById(id);
         if (trajetOptional.isPresent()) {
             model.addAttribute("TrajetForm", trajetOptional.get());
-            return "edit_trajet"; // Redirige vers un formulaire spécifique pour l'édition.
+            return "edit_trajet"; // Affiche le formulaire de modification avec les données pré-remplies.
         } else {
-            return "redirect:/trajets/all?error=notfound";
+            return "redirect:/trajets/all?error=notfound"; // Si le trajet n'est pas trouvé, redirige.
         }
     }
 
     @PostMapping("/updateTrajet/{id}")
     public String updateTrajet(@PathVariable("id") Long id, @ModelAttribute("TrajetForm") Trajet trajet) {
+        // Assurez-vous que l'objet Trajet a bien l'ID avant de faire la mise à jour.
         trajet.setId(id);
-        trajetService.createTrajet(trajet); // Ou utilisez un service dédié à la mise à jour.
-        return "redirect:/trajets/all";
+        trajetService.updateTrajet(trajet); // Utilisez ici une méthode d'update dans votre service.
+        return "redirect:/trajets/all"; // Redirige vers la liste des trajets après mise à jour.
     }
 
     @GetMapping("/delete/{id}")

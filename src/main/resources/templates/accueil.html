@@ -45,6 +45,9 @@
             background-color: #c4a8d0;
             color: white;
         }
+        .dropdown-menu .dropdown-item {
+            color: #ffffff; /* Couleur du texte */
+            background-color: #343a40;} /* Couleur de fond */
     </style>
 </head>
 <body>
@@ -54,9 +57,16 @@
             <img src="/images/logo_blanc.png" alt="Logo">
         </a>
         <div class="d-flex">
-            <a href="#" class="nav-link">Connexion</a>
-            <a href="#" class="nav-link">Inscription</a>
-        </div>
+            <a  href="#" th:href="@{/auth/login/user}" class="nav-link">Connexion</a>
+            <div class="dropdown">
+                <a href="#" class="nav-link dropdown-toggle" id="inscriptionDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Inscription
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="inscriptionDropdown">
+                    <li><a class="dropdown-item" th:href="@{/auth/register/conducteur}">Inscription Conducteur</a></li>
+                    <li><a class="dropdown-item" th:href="@{/auth/register/passager}">Inscription Passager</a></li>
+                </ul>
+            </div>        </div>
     </div>
 </nav>
 
